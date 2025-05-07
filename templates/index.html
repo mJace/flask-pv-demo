@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TODO List</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .completed { text-decoration: line-through; color: gray; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>TODO List</h1>
+    <a href="{{ url_for('add_todo_web') }}">Add New TODO</a>
+    {% if todos %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Task</th>
+                <th>Completed</th>
+                <th>Actions</th>
+            </tr>
+            {% for todo in todos %}
+                <tr>
+                    <td>{{ todo.id }}</td>
+                    <td class="{% if todo.completed %}completed{% endif %}">{{ todo.task }}</td>
+                    <td>{{ 'Yes' if todo.completed else 'No' }}</td>
+                    <td>
+                        <form action="{{ url_for('toggle_todo', id=todo.id) }}" method="POST" style="display:inline;">
+                            <button type="submit">{{ 'Mark Incomplete' if todo.completed else 'Mark Complete' }}</button>
+                        </form>
+                        <form action="{{ url_for('delete_todo_web', id=todo.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No TODOs yet.</p>
+    {% endif %}
+</body>
+</html>

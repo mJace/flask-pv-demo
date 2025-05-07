@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add TODO</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Add New TODO</h1>
+    <form method="POST">
+        <label for="task">Task:</label><br>
+        <input type="text" id="task" name="task" required><br><br>
+        <button type="submit">Add TODO</button>
+    </form>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    <a href="{{ url_for('index') }}">Back to TODO List</a>
+</body>
+</html>
